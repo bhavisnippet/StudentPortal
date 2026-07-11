@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth UI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            /* background: linear-gradient(135deg, #ff512f, #764ba2); */
+            background: linear-gradient(90deg, #ff512f, #dd2476);
+        }
+
+        #heading {
+            color: white;
+            font-size: 3.5rem;
+            font-family: sans-serif;
+            color: white;
+            transition: transform 0.3s;
+            text-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        #heading span {
+            font-family: sans-serif;
+            font-size: 4.5rem;
+            color: rgb(255, 238, 0);
+        }
+
+        .container {
+            width: 420px;
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            max-height: 90vh;
+            overflow: auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-family: monospace;
+
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        input,
+        select {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #ff512f;
+        }
+
+        .btn {
+            background: #ff512f;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #dd2476;
+        }
+
+        .google-btn {
+            background: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .google-btn i {
+            color: red;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 10px 0;
+            position: relative;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .divider::before {
+            content: "";
+            position: absolute;
+            height: 1px;
+            width: 100%;
+            background: #ccc;
+            top: 50%;
+            left: 0;
+        }
+
+        p {
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .switch {
+            color: #ff512f;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .register-form {
+            display: none;
+        }
+
+        @media(max-width:450px) {
+
+            .container {
+                width: 95%;
+                padding: 25px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <h1 id="heading">Core<br />Networking<br />Classes<br /><span>Student Portal</span></h1> -->
+    <div class="container">
+        <!-- LOGIN -->
+        <form id="loginForm" class="form login-form">
+            <h2>Login</h2>
+            <input id="loginEmail" type="email" placeholder="Email" required>
+            <input id="loginPassword" type="password" placeholder="Password" required>
+
+            <button class="btn">Login</button>
+
+            <div class="divider"><span>OR</span></div>
+
+            <button id="googleLogin" type="button" class="google-btn">
+                <i class="fa-brands fa-google"></i>
+                Continue with Google
+            </button>
+
+            <p>
+                Don't have an account?
+                <span class="switch" onclick="showRegister()">Register</span>
+            </p>
+        </form>
+
+        <!-- REGISTER -->
+        <form id="registerForm" class="form register-form">
+            <h2>Create Account</h2>
+            <input id="name" type="text" placeholder="Full Name" required minlength="3">
+            <input id="age" type="number" placeholder="Age" min="16" required>
+
+            <select id="gender" required>
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+
+            <input id="email" type="email" placeholder="Email" required>
+            <input id="password" type="password" placeholder="Password (min 8 chars)" minlength="8" required>
+            <input id="phone" type="text" placeholder="Phone Number">
+
+            <select id="role">
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+                <option value="admin">Admin</option>
+            </select>
+
+            <button class="btn">Register</button>
+
+            <div class="divider"><span>OR</span></div>
+
+            <button id="googleLogin" type="button" class="google-btn">
+                <i class="fa-brands fa-google"></i>
+                Continue with Google
+            </button>
+
+            <p>
+                Already have an account?
+                <span class="switch" onclick="showLogin()">Login</span>
+            </p>
+        </form>
+    </div>
+
+    <script src="index.js"></script>
+
+</body>
+
+</html>

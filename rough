@@ -1,0 +1,33 @@
+                   START
+                     │
+                     ▼
+           Create Admin (One Time)
+                     │
+                     ▼
+               Admin Login
+                     │
+     ┌───────────────┼────────────────┐
+     ▼               ▼                ▼
+Create Teacher   Create Course   Enroll Student
+     │               │                │
+     ▼               ▼                ▼
+Teacher Login   Assign Teacher   Student Eligible
+                                      │
+                                      ▼
+                              Student Registers
+                                      │
+                                      ▼
+                               Student Login
+                                      │
+                                      ▼
+                                 Receive JWT
+                                      │
+                                      ▼
+                              Access Dashboard
+                                      │
+                 ┌────────────────────┴───────────────────┐
+                 ▼                                        ▼
+          View My Courses                         Watch Lessons
+                 │                                        │
+                 ▼                                        ▼
+            Download Notes                         Take Tests
