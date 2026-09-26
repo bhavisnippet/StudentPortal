@@ -1,0 +1,35 @@
+COURSE MODULE
+────────────────────────────────────
+
+CREATE
+✅ Course without teacher
+✅ Course with valid active teacher
+❌ Duplicate title
+❌ Non-existent teacher
+❌ Student ID as teacherId
+❌ Inactive teacher
+
+UPDATE
+✅ Update Draft
+✅ Update Published
+✅ Change teacher
+❌ Change to inactive teacher
+❌ Duplicate title
+
+PUBLISH
+✅ Draft → Published
+✅ Archived → Published
+❌ No teacher
+❌ Inactive teacher
+❌ Already Published
+
+ARCHIVE
+✅ Published → Archived
+❌ Draft → Archived
+❌ Already Archived
+
+DELETE
+✅ Delete Draft
+✅ Delete Published
+✅ Delete Archived
+❌ Non-existent course

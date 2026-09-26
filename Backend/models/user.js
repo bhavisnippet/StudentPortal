@@ -37,31 +37,26 @@ const userSchema = new mongoose.Schema(
       minlength: 8,
       select: false, // 🔐 hide password by default
     },
-    phone: {
-      type: String,
-      match: /^[0-9]{10}$/,
-    },
     role: {
       type: String,
       enum: ["student", "teacher", "admin"],
       default: "student",
     },
+    status: {
+      type: String,
+      default: "Active",
+    },
     refreshToken: {
       type: String,
     },
-    isVerified: {
-      type: Boolean,
-      default: false,
+    createdAt: {
+      type: Date,
+      default: Date.now,
     },
-    googleId: String,
-    provider: {
-      type: String,
-      enum: ["local", "google"],
-      default: "local",
+    updatedAt: {
+      type: Date,
+      default: Date.now,
     },
-    emailVerificationToken: String,
-
-    emailVerificationExpires: Date,
   },
   { timestamps: true },
 );

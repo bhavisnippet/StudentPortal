@@ -31,3 +31,19 @@ Teacher Login   Assign Teacher   Student Eligible
                  │                                        │
                  ▼                                        ▼
             Download Notes                         Take Tests
+
+
+
+
+
+Action	         Status
+
+Create	         201
+Read	              200
+Update	         200
+Deactivate	    200
+Bad Request	    400
+Unauthorized	    401
+Forbidden	         403
+Not Found	         404
+Server Error	    500

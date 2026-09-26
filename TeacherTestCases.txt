@@ -1,0 +1,61 @@
+TEACHER MODULE
+────────────────────────────────────
+
+CREATE TEACHER
+✅ Admin creates teacher
+❌ No token
+❌ Invalid token
+❌ Student creates teacher
+❌ Teacher creates teacher
+❌ Duplicate teacher email
+❌ Email belongs to student
+❌ Email belongs to admin
+❌ Missing name
+❌ Missing email
+❌ Missing password
+❌ Empty request body
+❌ Invalid email
+
+VIEW TEACHERS
+✅ Admin views teachers
+❌ No token
+❌ Invalid token
+❌ Student views teachers
+❌ Teacher views teachers
+✅ No teachers → []
+✅ Active teachers displayed
+✅ Inactive teachers displayed
+❌ Password exposed
+
+UPDATE TEACHER
+✅ Update name
+✅ Update email
+✅ Update status
+✅ Update multiple fields
+❌ No token
+❌ Student updates teacher
+❌ Teacher updates teacher
+❌ Non-existent teacherId
+❌ Student ID
+❌ Admin ID
+❌ Invalid ObjectId
+❌ Duplicate email
+❌ Invalid status
+❌ Change role
+❌ Change _id
+
+DEACTIVATE TEACHER
+✅ Active → Inactive
+❌ No token
+❌ Student deactivates
+❌ Teacher deactivates
+❌ Non-existent teacher
+❌ Student ID
+❌ Admin ID
+❌ Already inactive
+
+TEACHER + COURSE
+✅ Teacher assigned to course
+✅ Deactivate assigned teacher
+✅ Course remains Published
+❌ Inactive teacher cannot manage course

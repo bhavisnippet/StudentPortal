@@ -1,40 +1,12 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
-const sendEmail = require("../utils/sendEmail");
 
 const {
   generateAccessToken,
   generateRefreshToken,
 } = require("../utils/generateTokens");
 
-// google callback
-exports.google = async (req, res) => {
-  const user = req.user;
-
-  const accessToken = generateAccessToken(user);
-  const refreshToken = generateRefreshToken(user);
-
-  user.refreshToken = refreshToken;
-  await user.save();
-
-  res.cookie("accessToken", accessToken, {
-    httpOnly: true,
-    secure: false,
-    sameSite: "lax",
-    maxAge: 15 * 60 * 1000,
-  });
-
-  res.cookie("refreshToken", refreshToken, {
-    httpOnly: true,
-    secure: false,
-    sameSite: "lax",
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-  });
-
-  res.redirect("http://localhost:5500/Frontend/Home.html");
-};
-// REGISTER
+// REGISTER ✅
 exports.register = async (req, res) => {
   try {
     const { name, age, gender, email, password, phone, role } = req.body;
@@ -53,84 +25,44 @@ exports.register = async (req, res) => {
       phone,
       role,
     });
-    const rawToken = crypto.randomBytes(32).toString("hex");
-    const hashedToken = crypto
-      .createHash("sha256")
-      .update(rawToken)
-      .digest("hex");
 
-    user.emailVerificationToken = hashedToken;
-    user.emailVerificationExpires = Date.now() + 10 * 60 * 1000;
     await user.save();
-    const verifyURL = `${process.env.CLIENT_URL}/api/auth/verify-email?token=${rawToken}`;
-    const message = `
-      <h2>Email Verification</h2>
-      <p>Please verify your email by clicking the link below:</p>
-      <a href="${verifyURL}">Verify Email</a>
-    `;
-
-    await sendEmail(user.email, "Verify Your Email", message);
-
     res.status(201).json({
-      message: "User registered. Please verify your email.",
+      message: "User registered.",
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-// Verify Email
-exports.verifyEmail = async (req, res) => {
-  try {
-    const { token } = req.query;
-
-    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
-
-    const user = await User.findOne({
-      emailVerificationToken: hashedToken,
-      emailVerificationExpires: { $gt: Date.now() },
-    });
-    if (!user) {
-      return res.status(400).json({
-        message: "Invalid or expired verification token",
-      });
-    }
-
-    user.isVerified = true;
-
-    user.emailVerificationToken = undefined;
-
-    user.emailVerificationExpires = undefined;
-
-    await user.save();
-
-    res.redirect("http://localhost:5500/Frontend/index.html");
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-// LOGIN
+// LOGIN ✅
 exports.login = async (req, res) => {
   try {
+    // Receive email and password
     const { email, password } = req.body;
+    // Find user by email and password
     const user = await User.findOne({ email }).select("+password");
+    // Compare password
     if (!user || !(await user.comparePassword(password))) {
       console.log("Invalid email or password");
       return res.status(401).json({ error: "Invalid email or password" });
     }
-    if (!user.isVerified) {
+    // Check account status
+    if (user.status !== "Active") {
       return res.status(401).json({
-        message: "Please verify your email first",
+        error: "Account Blocked",
       });
     }
 
+    // Generate Tokens
     const accessToken = generateAccessToken(user);
     const refreshToken = generateRefreshToken(user);
 
+    // Store refreshToken in DB
     user.refreshToken = refreshToken;
     await user.save();
 
+    // Send acccessToken and refreshToken in Cookies
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       secure: false, // true in production (HTTPS)
@@ -145,6 +77,7 @@ exports.login = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
+    // Send Response
     res.json({
       message: "Login successful",
     });
@@ -152,6 +85,11 @@ exports.login = async (req, res) => {
     console.log(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
+};
+
+// ME
+exports.me = async (req, res) => {
+  res.status(200).json({ message: "Hii I'm Protected Route" });
 };
 
 // REFRESH TOKEN
