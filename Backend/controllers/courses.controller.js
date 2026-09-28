@@ -162,10 +162,6 @@ exports.updateCourse = async (req, res) => {
     if (price !== undefined) existingCourse.price = price;
     if (thumbnail !== undefined) existingCourse.thumbnail = thumbnail;
 
-    // IMPORTANT:
-    // status is NOT changed here.
-    // createdBy is NOT changed here.
-
     // 6. Save course
     await existingCourse.save();
 
